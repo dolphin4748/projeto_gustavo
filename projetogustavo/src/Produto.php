@@ -70,7 +70,7 @@ class Produto{
 
     //Função para exibir os atributos do produto
     public function exibirDetalhes() {
-        return "Jogo: " . $this->nomeJogo . ", Estoque: " . $this->qtd . ", Preço: R$" . number_format($this->preco, 2, ',', '.'). "\n";
+        return "Jogo: " . $this->nomeJogo . ", Estoque: " . $this->qtd . ", Preço: R$" . number_format($this->preco, 2, ',', '.');
     }
 
     public function getVendedor(): Vendedor{

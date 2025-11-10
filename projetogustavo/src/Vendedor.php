@@ -31,7 +31,7 @@ class Vendedor extends Usuario
         }else{
             echo "\nitens do estoque de produtos: \n";
             foreach ($this->estoque as $i => $item) {
-                echo "($i) ". $item->exibirDetalhes();
+                echo "($i) ". $item->exibirDetalhes(). "\n";
             }
         }
     } 

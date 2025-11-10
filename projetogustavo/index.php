@@ -52,10 +52,11 @@ function menuCliente(Cliente $cliente, $vendedores): bool
         echo "\n===== MENU CLIENTE =====\n";
         echo "1. Listar estoque do vendedor\n";
         echo "2. Adicionar produto ao carrinho\n";
-        echo "3. Listar carrinho\n";
-        echo "4. Comprar carrinho\n";
-        echo "5. Depositar dinheiro\n";
-        echo "6. Mostrar saldo\n";
+        echo "3. Remover produto do carrinho\n";
+        echo "4. Listar carrinho\n";
+        echo "5. Comprar carrinho\n";
+        echo "6. Depositar dinheiro\n";
+        echo "7. Mostrar saldo\n";
         echo "0. Logout\n";
 
         $opcao = readline("Escolha uma opção: ");
@@ -98,18 +99,23 @@ function menuCliente(Cliente $cliente, $vendedores): bool
                     echo "Produto inválido.\n";
                 }
                 break;
-
+            
             case 3:
                 $cliente->listarCarrinho();
+                $index = (int)readline("Digite o índice do produto (0,1,2...): ");
+                $cliente->removerCarrinho($index);
                 break;
             case 4:
-                $cliente->comprarCarrinho();
+                $cliente->listarCarrinho();
                 break;
             case 5:
+                $cliente->comprarCarrinho();
+                break;
+            case 6:
                 $valor = readline("Digite o valor a depositar: ");
                 $cliente->conta->depositar((float)$valor);
                 break;
-            case 6:
+            case 7:
                 echo $cliente->conta->retornarDados();
                 break;
             case 0:
