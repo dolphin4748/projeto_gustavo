@@ -8,17 +8,7 @@ use Unimar\Poo\ContaCorrente;
 
 class Cliente extends Usuario
 {
-    
-    protected $carrinho = [];
-
-    public function __construct(string $cpf, string $nome, string $sobrenome, string $email, string $senha){
-        $this->cpf = $cpf;
-        $this->nome = $nome;
-        $this->sobrenome = $sobrenome;
-        $this->email = $email;
-        $this->senha = $senha;
-        $this->conta = new ContaCorrente($this, 0);
-    }
+    private $carrinho = [];
 
     //Função para adcionar algum item no carrinho
     public function adcionarCarrinho(Produto $produto, int $qtd): void{
@@ -60,9 +50,9 @@ class Cliente extends Usuario
         if ($verificar){
 
             echo "total a ser gasto: R$". number_format($total, 2, ',', '.'). "\n";
-            if ($this->conta->temSaldoDisponivel($total)){ //checa se a transferencia deu certo, porem ainda não existe nenhuma conta de pagamento
+            if ($this->getConta()->temSaldoDisponivel($total)){ //checa se a transferencia deu certo, porem ainda não existe nenhuma conta de pagamento
                 foreach ($this->carrinho as $item) {
-                    $this->conta->transferir($item["produto"]->vendedor->conta, $item["produto"]->getPreco() * $item["qtd"]);
+                    $this->getConta()->transferir($item["produto"]->getVendedor()->getConta(), $item["produto"]->getPreco() * $item["qtd"]);
                     $item["produto"]->atualizarEstoque($item["qtd"]);
                     $this->removerCarrinho(0);
                 }
@@ -84,13 +74,11 @@ class Cliente extends Usuario
             echo "\nnão existe nenhum item no carrinho atual.\n";
         }else{
             echo "\nitens do carrinho de compras: \n";
-            foreach ($this->carrinho as $item) {
-                echo $item["produto"]->exibirDetalhes();
+            foreach ($this->carrinho as $id => $item) {
+                echo "(". $id . ") ". $item["produto"]->exibirDetalhes(). " | qtd: ". $item["qtd"];
             }
         }
-
     } 
-
 }
 
 

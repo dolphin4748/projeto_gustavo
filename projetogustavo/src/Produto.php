@@ -20,10 +20,10 @@ use Unimar\Poo\Vendedor;
 
 class Produto{
 
-    public Vendedor $vendedor;
-    protected string $nomeJogo;
-    protected int $qtd;
-    protected float $preco;
+    private Vendedor $vendedor;
+    private string $nomeJogo;
+    private int $qtd;
+    private float $preco;
 
     public function __construct(Vendedor $vendedor, string $nomeJogo, int $qtd, float $preco) {
         $this->vendedor = $vendedor;
@@ -71,6 +71,10 @@ class Produto{
     //Função para exibir os atributos do produto
     public function exibirDetalhes() {
         return "Jogo: " . $this->nomeJogo . ", Estoque: " . $this->qtd . ", Preço: R$" . number_format($this->preco, 2, ',', '.'). "\n";
+    }
+
+    public function getVendedor(): Vendedor{
+        return $this->vendedor;
     }
 }
 

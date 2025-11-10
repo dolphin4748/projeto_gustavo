@@ -6,9 +6,6 @@ use Unimar\Poo\Usuario;
 use Unimar\Poo\Cliente;
 use Unimar\Poo\Vendedor;
 
-// Instância só para usar o método login()
-$auth = new Usuario();
-
 // instancia array para os vendedores
 $vendedores = [];
 
@@ -24,6 +21,27 @@ $vendedores["vendedorPre-definido@gmail.com"]->adcionarEstoque("The Witcher 3", 
 $vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("AVIÃOZINHO DO TRÁFICO 3", 10, 150.00);
 $vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("mineirinho ultra adventure 2", 5, 100.00);
 $vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("bad rats", 3, 200.00);
+
+// Função para efetuar login ela recebe como parametros email e senha, se houver uma conta com os email e senha passados ela retornara uma classe cliente ou vendedor a depender da conta
+function logar(string $email, string $senha): Usuario{
+    if($email == 'cliente@gmail.com' && $senha == '12345') 
+    {
+        echo "Cliente logado\n";
+        
+        return new Cliente("111.111.111-11", "clinte", "teste", "cliente@gamil.com", "12345");
+    }
+    else if($email == 'vendedor@gmail.com' && $senha == '12345')
+    {
+    
+        echo "Vendedor logado\n";
+        
+        return new Vendedor("111.111.111-11", "vendedor", "teste", "vendedor@gamil.com", "12345");
+    }
+
+    echo "Não foi possivel fazer login\n";
+    
+    return null;
+}
 
 
 // ====== MENU PARA CLIENTE ======
@@ -157,7 +175,7 @@ while ($ativo) {
     $email = readline("Email: ");
     $senha = readline("Senha: ");
 
-    $usuario = $auth->login($email, $senha);
+    $usuario = logar($email, $senha);
 
     if ($usuario instanceof Cliente) {
         $ativo = menuCliente($usuario, $vendedores);

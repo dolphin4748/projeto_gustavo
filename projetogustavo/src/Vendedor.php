@@ -7,16 +7,7 @@ use Unimar\Poo\Produto;
 
 class Vendedor extends Usuario
 {
-    protected $estoque = [];
-
-    public function __construct(string $cpf, string $nome, string $sobrenome, string $email, string $senha){
-        $this->cpf = $cpf;
-        $this->nome = $nome;
-        $this->sobrenome = $sobrenome;
-        $this->email = $email;
-        $this->senha = $senha;
-        $this->conta = new ContaCorrente($this, 0);
-    }
+    private $estoque = [];
 
     //Função para adcionar algum item no estoque
     public function adcionarEstoque(string $nomeJogo, int $qtd, float $preco) {
