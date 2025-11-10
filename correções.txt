@@ -1,0 +1,5 @@
+correções:
+1. corrigir listar carrinho(não aparece índice dos itens e tbm não mostra quantas copias do mesmo jogo estão sendo compradas)
+2. corrigir menu do cliente(não tem a opção de remover um item do carrinho)
+3. na função comprar carrinho ele realiza múltiplas transferências mesmo se todos os produtos comprados forem do mesmo vendedor
+4. nenhuma das classes usa de abstração(provavelmente alterar a classe usuario)
