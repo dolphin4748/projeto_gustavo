@@ -44,13 +44,16 @@ abstract class Usuario
         return $this->cpf;
     }
 
-    public function setEmail(string $email){
+    protected function setEmail(string $email){
         $this->email = $email;
     }
     public function getEmail(): string{
         return $this->email;
     }
     
+    protected function setSenha(string $senha){
+        $this->senha = $senha;
+    }
     public function getSenha(): string{
         return $this->senha;
     }

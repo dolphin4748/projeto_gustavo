@@ -23,7 +23,7 @@ $vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("mineirinho ultr
 $vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("bad rats", 3, 200.00);
 
 // Função para efetuar login ela recebe como parametros email e senha, se houver uma conta com os email e senha passados ela retornara uma classe cliente ou vendedor a depender da conta
-function logar(string $email, string $senha): Usuario{
+function logar(string $email, string $senha): Usuario|null{
     if($email == 'cliente@gmail.com' && $senha == '12345') 
     {
         echo "Cliente logado\n";
@@ -113,10 +113,10 @@ function menuCliente(Cliente $cliente, $vendedores): bool
                 break;
             case 6:
                 $valor = readline("Digite o valor a depositar: ");
-                $cliente->conta->depositar((float)$valor);
+                $cliente->getConta()->depositar((float)$valor);
                 break;
             case 7:
-                echo $cliente->conta->retornarDados();
+                echo $cliente->getConta()->retornarDados();
                 break;
             case 0:
                 echo "Logout realizado!\n";
@@ -159,7 +159,7 @@ function menuVendedor(Vendedor $vendedor): bool
                 $vendedor->removerEstoque($index);
                 break;
             case 4:
-                echo $vendedor->conta->retornarDados();
+                echo $vendedor->getConta()->retornarDados();
                 break;
             case 0:
                 echo "Logout realizado!\n";
@@ -194,5 +194,3 @@ while ($ativo) {
 }
 
 echo "Programa encerrado!\n";
-
-
