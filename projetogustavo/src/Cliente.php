@@ -79,6 +79,10 @@ class Cliente extends Usuario
             }
         }
     } 
+
+    public function getTipo(): string{
+        return "cliente";
+    }
 }
 
 

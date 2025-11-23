@@ -40,6 +40,10 @@ class Vendedor extends Usuario
         return $this->estoque;
     }
 
+    public function getTipo(): string{
+        return "vendedor";
+    }
+
 }
 
 

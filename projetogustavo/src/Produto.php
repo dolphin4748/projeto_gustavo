@@ -3,16 +3,17 @@
 namespace Unimar\Poo;
 
 use Unimar\Poo\Promocao;
+use Unimar\Poo\Vendedor;
 
 class Produto extends Promocao {
 
-    private string $vendedor;
+    private Vendedor $vendedor;
     private string $nome;
     private int $qtd;
     private float $valor;
     private bool $temPromocao = false;
 
-    public function __construct(string $vendedor, string $nome, int $qtd, float $valor){
+    public function __construct(Vendedor $vendedor, string $nome, int $qtd, float $valor){
     
         parent::__construct(0); // não tem promoção inicialmente
         $this->vendedor = $vendedor;
@@ -33,11 +34,11 @@ class Produto extends Promocao {
         return $this->valor;
     }
 
-    public function getVendedor(): string {
+    public function getVendedor(): Vendedor {
         return $this->vendedor;
     }
 
-    public function setVendedor(string $vendedor): void{
+    public function setVendedor(Vendedor $vendedor): void{
         $this->vendedor = $vendedor;
     }
 
@@ -61,7 +62,7 @@ class Produto extends Promocao {
     }
 
     //aq é provavelmente uma função pra usar o polimorfismo q ele pediu
-    public function getPrecoFinal(): float{
+    public function getPreco(): float{
         if (!$this->temPromocao) {
             return $this->valor;
         }

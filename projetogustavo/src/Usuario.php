@@ -61,6 +61,8 @@ abstract class Usuario
     public function getConta(): ContaCorrente{
         return $this->conta;
     }
+    
+    abstract public function getTipo(): string;
 
 }
 
