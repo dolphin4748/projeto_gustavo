@@ -5,22 +5,25 @@ require_once 'vendor/autoload.php';
 use Unimar\Poo\Usuario;
 use Unimar\Poo\Cliente;
 use Unimar\Poo\Vendedor;
+use Unimar\Poo\ADM;
+use Unimar\Poo\Loja;
 
-// instancia array para os vendedores
-$vendedores = [];
+// instancia array para os usuarios e loja
+$usuarios = [];
+$loja = new Loja();
 
 // vendedor pre-definido para que tenha algum estoque para o cliente
-$vendedores["vendedorPre-definido@gmail.com"] = new Vendedor("222.222.222-22", "Vendedor", "Teste", "vendedor@gmail.com", "12345");
-$vendedores["vendedorPre-definido2@gmail.com"] = new Vendedor("333.333.333-33", "Vendedor", "Teste2", "vendedor2@gmail.com", "54321");
+$usuarios[] = new Vendedor("222.222.222-22", "Vendedor", "Teste", "vendedor@gmail.com", "12345");
+$usuarios[] = new Vendedor("333.333.333-33", "Vendedor", "Teste2", "vendedor2@gmail.com", "54321");
 
 // adicionando estoque
-$vendedores["vendedorPre-definido@gmail.com"]->adcionarEstoque("GTA V", 10, 150.00);
-$vendedores["vendedorPre-definido@gmail.com"]->adcionarEstoque("Minecraft", 5, 100.00);
-$vendedores["vendedorPre-definido@gmail.com"]->adcionarEstoque("The Witcher 3", 3, 200.00);
+$usuarios[0]->adcionarEstoque($loja, "GTA V", 10, 150.00);
+$usuarios[0]->adcionarEstoque($loja, "Minecraft", 5, 100.00);
+$usuarios[0]->adcionarEstoque($loja, "The Witcher 3", 3, 200.00);
 
-$vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("AVIÃOZINHO DO TRÁFICO 3", 10, 150.00);
-$vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("mineirinho ultra adventure 2", 5, 100.00);
-$vendedores["vendedorPre-definido2@gmail.com"]->adcionarEstoque("bad rats", 3, 200.00);
+$usuarios[1]->adcionarEstoque($loja, "AVIÃOZINHO DO TRÁFICO 3", 10, 150.00);
+$usuarios[1]->adcionarEstoque($loja, "mineirinho ultra adventure 2", 5, 100.00);
+$usuarios[1]->adcionarEstoque($loja, "bad rats", 3, 200.00);
 
 // Função para efetuar login ela recebe como parametros email e senha, se houver uma conta com os email e senha passados ela retornara uma classe cliente ou vendedor a depender da conta
 function logar(string $email, string $senha): Usuario|null{
@@ -45,7 +48,7 @@ function logar(string $email, string $senha): Usuario|null{
 
 
 // ====== MENU PARA CLIENTE ======
-function menuCliente(Cliente $cliente, $vendedores): bool
+function menuCliente(Cliente $cliente, Loja $loja): bool
 {
     $menuAberto = true;
     while ($menuAberto) {
@@ -63,34 +66,14 @@ function menuCliente(Cliente $cliente, $vendedores): bool
 
         switch ($opcao) {
             case 1:
-                $i = 1;
-                foreach ($vendedores as $email => $vendedor) {
-                    echo "\nVendedor $i (Email: $email)\n";
-                    $vendedor->listarEstoque();
-                    $i++;
-                }
+                $loja->listarProdutos();
                 break;
 
             case 2:
-                $i = 1;
-                $mapa = []; // mapeia número digitado para email do vendedor
-                foreach ($vendedores as $email => $vendedor) {
-                    echo "\nVendedor $i (Email: $email)\n";
-                    $vendedor->listarEstoque();
-                    $mapa[$i] = $email;
-                    $i++;
-                }
-
-                $nVendedor = (int)readline("Digite o número do vendedor: ");
-                if (!isset($mapa[$nVendedor])) {
-                    echo "Vendedor inválido.\n";
-                    break;
-                }
-
-                $emailEscolhido = $mapa[$nVendedor];
+                $loja->listarProdutos();
                 $index = (int)readline("Digite o índice do produto (0,1,2...): ");
                 $qtd = (int)readline("Digite a quantidade: ");
-                $estoque = $vendedores[$emailEscolhido]->getEstoque();
+                $estoque = $loja->getEstoque();
 
                 if (isset($estoque[$index])) {
                     $cliente->adcionarCarrinho($estoque[$index], (int)$qtd);
@@ -183,9 +166,9 @@ while ($ativo) {
 
     $usuario = logar($email, $senha);
 
-    if ($usuario instanceof Cliente) {
-        $ativo = menuCliente($usuario, $vendedores);
-    } elseif ($usuario instanceof Vendedor) {
+    if ($usuario->getTipo() == "cliente") {
+        $ativo = menuCliente($usuario, $loja);
+    } elseif ($usuario->getTipo() == "vendedor") {
         $vendedores[$usuario->getEmail()] = $usuario; 
         $ativo = menuVendedor($usuario);
     } else {

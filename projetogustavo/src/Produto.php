@@ -69,5 +69,9 @@ class Produto extends Promocao {
 
         return parent::aplicarDesconto($this->valor);
     }
+
+    public function exibirDetalhes() {
+        return "Jogo: " . $this->nome . ", Estoque: " . $this->qtd . ", Preço: R$" . number_format($this->getPreco(), 2, ',', '.');
+    }
 }
 

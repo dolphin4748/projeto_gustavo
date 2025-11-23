@@ -75,7 +75,7 @@ class Cliente extends Usuario
         }else{
             echo "\nitens do carrinho de compras: \n";
             foreach ($this->carrinho as $id => $item) {
-                echo "($id) ". $item["produto"]->exibirDetalhes(). " | qtd: ". $item["qtd"]. "\n";
+                echo "[$id] ". $item["produto"]->exibirDetalhes(). " | qtd: ". $item["qtd"]. "\n";
             }
         }
     } 

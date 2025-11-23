@@ -12,16 +12,15 @@ class Loja {
     }
 
     public function removerJogo(int $index): bool {
-   
-        foreach ($this->estoque as $i => $produto) {
-            if ($produto->getNome() === $nome) {
-                //isso aqui é pra remover um item do array, essa função unset destroi var ou item de array
-                echo "removendo {$this->estoque[$index]->getNomeJogo()} do estoque.\n";
-                unset($this->estoque[$index]);
-                $this->estoque = array_values($this->estoque);
-                return true;
-            }
+
+        if (array_key_exists($index, $usuarios)) {
+            //isso aqui é pra remover um item do array, essa função unset destroi var ou item de array
+            echo "removendo {$this->estoque[$index]->getNomeJogo()} do estoque.\n";
+            unset($this->estoque[$index]);
+            $this->estoque = array_values($this->estoque);
+            return true;
         }
+        echo "Jogo não existe.\n";
         return false;
     }
 
@@ -43,13 +42,19 @@ class Loja {
         return false;
     }
 
-    public function listarEstoques(): void{
-        foreach ($this->estoque as $produto) {
-            echo "Jogo: {$produto->getNome()}\n";
-            echo "Estoque: {$produto->getQtd()}\n";
-            echo "Preço final: R$ " . number_format($produto->getPrecoFinal(), 2) . "\n";
+    public function listarProdutos(): void{
+        foreach ($this->estoque as $index => $produto) {
+            echo "\n## ";
+            echo "[{$index}] ";
+            echo "Jogo: {$produto->getNome()}";
+            echo "Estoque: {$produto->getQtd()}";
+            echo "Preço final: R$ " . number_format($produto->getPreco(), 2) . "\n";
             echo "-----------------------\n";
         }
+    }
+
+    public function getEstoque(){
+        return $this->estoque;
     }
 }
 
