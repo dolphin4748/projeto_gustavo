@@ -57,7 +57,7 @@ class Loja {
 
     public function listarProdutos(): void{
         foreach ($this->estoque as $index => $produto) {
-            echo "[$index] ". $item->exibirDetalhes(). "\n";
+            echo "[$index] ". $produto->exibirDetalhes(). "\n";
         }
     }
 

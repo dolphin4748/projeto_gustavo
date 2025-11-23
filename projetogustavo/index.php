@@ -41,6 +41,64 @@ function logar(array $usuarios, string $email, string $senha): Usuario|null{
     return null;
 }
 
+function menuADM(ADM $adm, array &$usuarios): bool
+{
+    $menuAberto = true;
+    while ($menuAberto) {
+        echo "\n===== MENU ADM =====\n";
+        echo "1. Listar usuarios\n";
+        echo "2. Adicionar usuario\n";
+        echo "3. Remover usuario\n";
+        echo "0. Logout\n";
+
+        $opcao = readline("Escolha uma opção: ");
+
+        switch ($opcao) {
+            case 1:
+                $adm->listarUsuarios($usuarios);
+                break;
+
+            case 2:
+                $cpf = readline("Digite o CPF do usuario: ");
+                $nome = readline("Digite o Nome do usuario: ");
+                $sobreNome = readline("Digite o Sobrenome do usuario: ");
+                $email = readline("Digite o Email do usuario: ");
+                $senha = readline("Digite a Senha do usuario: ");
+                echo "\n== Tipos de usuarios ==\n";
+                echo "1. Cliente\n";
+                echo "2. Vendedor\n";
+                echo "3. ADM\n";
+                $tipo = (int)readline("Digite uma opção: ");
+
+                if ($tipo == 1){
+                    $user = new Cliente($cpf, $nome, $sobreNome, $email, $senha);
+                }elseif($tipo == 2){
+                    $user = new Vendedor($cpf, $nome, $sobreNome, $email, $senha);
+                }elseif($tipo == 3){
+                    $user = new ADM($cpf, $nome, $sobreNome, $email, $senha);
+                }else{
+                    echo "Tipo invalido!\n";
+                    break;
+                }
+
+                $usuarios = $adm->adcionarUsuario($usuarios, $user);
+                break;
+            
+            case 3:
+                $adm->listarUsuarios($usuarios);
+                $index = (int)readline("Digite o índice de usuario (0,1,2...): ");
+                $usuarios = $adm->removerUsuario($usuarios, $index);
+                break;
+            case 0:
+                echo "Logout realizado!\n";
+                $resposta = strtolower(trim(readline("Deseja encerrar o código? (s/n): ")));
+                return $resposta !== 's';  // true = continuar, false = encerrar
+            default:
+                echo "Opção inválida!\n";
+        }
+    }
+    return true;
+}
 
 // ====== MENU PARA CLIENTE ======
 function menuCliente(Cliente $cliente, Loja $loja): bool
@@ -48,7 +106,7 @@ function menuCliente(Cliente $cliente, Loja $loja): bool
     $menuAberto = true;
     while ($menuAberto) {
         echo "\n===== MENU CLIENTE =====\n";
-        echo "1. Listar estoque do vendedor\n";
+        echo "1. Listar estoque da Loja\n";
         echo "2. Adicionar produto ao carrinho\n";
         echo "3. Remover produto do carrinho\n";
         echo "4. Listar carrinho\n";
@@ -174,12 +232,15 @@ while ($ativo) {
 
     $usuario = logar($usuarios, $email, $senha);
 
-    if ($usuario->getTipo() == "cliente") {
-        $ativo = menuCliente($usuario, $loja);
-    } elseif ($usuario->getTipo() == "vendedor") {
-        $vendedores[$usuario->getEmail()] = $usuario; 
-        $ativo = menuVendedor($usuario, $loja);
-    } else {
+    if ($usuario != null){
+        if ($usuario->getTipo() == "cliente") {
+            $ativo = menuCliente($usuario, $loja);
+        }elseif ($usuario->getTipo() == "vendedor") {
+            $ativo = menuVendedor($usuario, $loja);
+        }elseif ($usuario->getTipo() == "adm"){
+            $ativo = menuADM($usuario, $usuarios);
+        } 
+    }else {
         echo "Login inválido!\n";
     }
 }

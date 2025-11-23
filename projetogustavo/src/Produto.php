@@ -49,14 +49,14 @@ class Produto{
         $this->desconto = 0;
     }
 
-    public function atualizarEstoque(int $novoValor): void{
-        if($this->checarEstoque($quantidadeVendida)) {
-            $this->qtd -= $quantidadeVendida;
+    public function atualizarEstoque(int $qtd): void{
+        if($this->checarEstoque($qtd)) {
+            $this->qtd -= $qtd;
         }
     }
 
     public function checarEstoque(int $qtd): bool{
-        if($quantidadeVendida <= $this->qtd) {
+        if($qtd <= $this->qtd) {
             return true; // Tem estoque suficiente
         } else {
             return false; // Não tem estoque suficiente

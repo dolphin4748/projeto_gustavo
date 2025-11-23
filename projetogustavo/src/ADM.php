@@ -26,12 +26,13 @@ class ADM extends Usuario{
 
     public function listarUsuarios(array $usuarios){
         foreach ($usuarios as $index => $user) {
-            echo "\n## ";
-            echo "[{$index}] ";
-            echo "Nome: {$user->getCpf()}";
-            echo "Nome: {$user->getNomeCompleto()}";
-            echo "Nome: {$user->getEmail()}";
-            echo " ##\n";
+            echo "\n##";
+            echo " [{$index}] ";
+            echo "CPF: {$user->getCpf()} ";
+            echo "Nome: {$user->getNomeCompleto()} ";
+            echo "Email: {$user->getEmail()} ";
+            echo "Tipo: {$user->getTipo()} ";
+            echo "##\n";
             echo "-----------------------";
         }
     }
