@@ -2,6 +2,9 @@
 
 namespace Unimar\Poo;
 
+use Unimar\Poo\Produto;
+use Unimar\Poo\Promocao;
+
 class Loja {
 
     private array $estoque = [];
@@ -13,9 +16,9 @@ class Loja {
 
     public function removerJogo(int $index): bool {
 
-        if (array_key_exists($index, $usuarios)) {
+        if (array_key_exists($index, $this->estoque)) {
             //isso aqui é pra remover um item do array, essa função unset destroi var ou item de array
-            echo "removendo {$this->estoque[$index]->getNomeJogo()} do estoque.\n";
+            echo "removendo {$this->estoque[$index]->getNome()} do estoque.\n";
             unset($this->estoque[$index]);
             $this->estoque = array_values($this->estoque);
             return true;
@@ -27,29 +30,34 @@ class Loja {
     public function adicionarPromocao(int $index, float $desconto): bool{
         
         if (array_key_exists($index, $this->estoque)) {
-            $estoque[$index]->setPromocao($desconto);
+            echo "adcionando uma promocao ao jogo {$this->estoque[$index]->getNome()}.\n";
+            $produto = $this->estoque[$index];
+            $this->estoque[$index] = new Promocao($produto->getVendedor(), $produto->getNome(), $produto->getQtd(), $produto->getValor(), $desconto);
             return true;
         }
+        echo "Jogo não existe.\n";
         return false;
     }
 
-    public function removerPromocao(string $nome): bool{
+    public function removerPromocao(int $index): bool{
         
         if (array_key_exists($index, $this->estoque)) {
-            $estoque[$index]->removerPromocao();
-            return true;
+            $produto = $this->estoque[$index];
+            if ($produto->getTipo() == "promocao"){
+                echo "removendo a promocao do jogo {$this->estoque[$index]->getNome()}.\n";
+                $this->estoque[$index] = new Produto($produto->getVendedor(), $produto->getNome(), $produto->getQtd(), $produto->getValor());
+                return true;
+            }
+            echo "Esse produto não esta em promoção.\n";
+            return false;
         }
+        echo "Jogo não existe.\n";
         return false;
     }
 
     public function listarProdutos(): void{
         foreach ($this->estoque as $index => $produto) {
-            echo "\n## ";
-            echo "[{$index}] ";
-            echo "Jogo: {$produto->getNome()}";
-            echo "Estoque: {$produto->getQtd()}";
-            echo "Preço final: R$ " . number_format($produto->getPreco(), 2) . "\n";
-            echo "-----------------------\n";
+            echo "[$index] ". $item->exibirDetalhes(). "\n";
         }
     }
 

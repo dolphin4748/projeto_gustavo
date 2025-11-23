@@ -2,20 +2,16 @@
 
 namespace Unimar\Poo;
 
-use Unimar\Poo\Promocao;
 use Unimar\Poo\Vendedor;
 
-class Produto extends Promocao {
+class Produto{
 
     private Vendedor $vendedor;
     private string $nome;
     private int $qtd;
     private float $valor;
-    private bool $temPromocao = false;
 
     public function __construct(Vendedor $vendedor, string $nome, int $qtd, float $valor){
-    
-        parent::__construct(0); // não tem promoção inicialmente
         $this->vendedor = $vendedor;
         $this->nome = $nome;
         $this->qtd = $qtd;
@@ -54,24 +50,30 @@ class Produto extends Promocao {
     }
 
     public function atualizarEstoque(int $novoValor): void{
-        $this->qtd = $novoValor;
+        if($this->checarEstoque($quantidadeVendida)) {
+            $this->qtd -= $quantidadeVendida;
+        }
     }
 
-    public function checarEstoque(): bool{
-        return $this->qtd > 0;
+    public function checarEstoque(int $qtd): bool{
+        if($quantidadeVendida <= $this->qtd) {
+            return true; // Tem estoque suficiente
+        } else {
+            return false; // Não tem estoque suficiente
+        }
     }
 
     //aq é provavelmente uma função pra usar o polimorfismo q ele pediu
     public function getPreco(): float{
-        if (!$this->temPromocao) {
-            return $this->valor;
-        }
-
-        return parent::aplicarDesconto($this->valor);
+        return $this->valor;
     }
 
     public function exibirDetalhes() {
         return "Jogo: " . $this->nome . ", Estoque: " . $this->qtd . ", Preço: R$" . number_format($this->getPreco(), 2, ',', '.');
+    }
+
+    public function getTipo(){
+        return "produto";
     }
 }
 

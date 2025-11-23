@@ -21,7 +21,7 @@ class Cliente extends Usuario
 
     //Função para remover algum item do carrinho
     public function removerCarrinho(int $index) {
-        echo "removendo ". $this->carrinho[$index]["produto"]->getNomeJogo(). " do carrinho.\n";
+        echo "removendo ". $this->carrinho[$index]["produto"]->getNome(). " do carrinho.\n";
         unset($this->carrinho[$index]);
         $this->carrinho = array_values($this->carrinho);        
     }

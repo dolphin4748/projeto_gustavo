@@ -2,11 +2,14 @@
 
 namespace Unimar\Poo;
 
-class Promocao {
+use Unimar\Poo\Produto;
+
+class Promocao extends Produto{
 
     protected float $desconto;
 
-    public function __construct(float $desconto){
+    public function __construct(Vendedor $vendedor, string $nome, int $qtd, float $valor, float $desconto){
+        parent::__construct($vendedor, $nome, $qtd, $valor, $desconto);
         $this->desconto = $desconto;
     }
 
@@ -18,9 +21,18 @@ class Promocao {
         $this->desconto = $valor;
     }
 
+    public function exibirDetalhes() {
+        return "Jogo: " . $this->getNome() . ", Estoque: " . $this->getQtd() . ", Preço: R$" . number_format($this->getPreco(), 2, ',', '.'). ", Desconto: ". number_format($this->getDesconto(), 2, ',', '.'). "%";
+    }
+
     //polimorfismo pros descontos
-    public function aplicarDesconto(float $precoOriginal): float{
-        return $precoOriginal - ($precoOriginal * ($this->desconto / 100));
+    public function getPreco(): float{
+        $valor = parent::getValor();
+        return $valor - ($valor * ($this->desconto / 100));
+    }
+
+    public function getTipo(){
+        return "promocao";
     }
 }
 
