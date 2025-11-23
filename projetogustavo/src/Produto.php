@@ -2,82 +2,71 @@
 
 namespace Unimar\Poo;
 
-use Unimar\Poo\Vendedor;
+use Unimar\Poo\Promocao;
 
-//CLASSE PRODUTO, PRIMEIROS PASSOS:
-//============================================================================
-//1.Criar a classe Produto
-//2.Criar os atributos vendedor, nome do jogo, quantidade em estoque e preço
-//3.Criar o construtor da classe Produto
-//4.Criar os métodos getters para cada atributo
-//5.Criar alguns objetos da classe Produto
-//6.Exibir os atributos de cada objeto criado
-//7.Criar um método para atualizar o estoque do produto
-//8.Integrar essa classe com as outras classes do projeto
-//============================================================================
+class Produto extends Promocao {
 
-//RESUMO:Fazer com que toda vez que o produto for comprado, o estoque diminua
-
-class Produto{
-
-    private Vendedor $vendedor;
-    private string $nomeJogo;
+    private string $vendedor;
+    private string $nome;
     private int $qtd;
-    private float $preco;
+    private float $valor;
+    private bool $temPromocao = false;
 
-    public function __construct(Vendedor $vendedor, string $nomeJogo, int $qtd, float $preco) {
+    public function __construct(string $vendedor, string $nome, int $qtd, float $valor){
+    
+        parent::__construct(0); // não tem promoção inicialmente
         $this->vendedor = $vendedor;
-        $this->nomeJogo = $nomeJogo;
+        $this->nome = $nome;
         $this->qtd = $qtd;
-        $this->preco = $preco;
+        $this->valor = $valor;
     }
 
-    //Métodos getters para cada atributo
-    public function getNomeJogo() {
-        return $this->nomeJogo;
+    public function getNome(): string{
+        return $this->nome;
     }
 
-    public function getQtd() {
+    public function getQtd(): int{
         return $this->qtd;
     }
 
-    public function getPreco() {
-        return $this->preco;
+    public function getValor(): float{
+        return $this->valor;
     }
 
-    //Método para checar o estoque do produto, como Vai funcionar
-    //1. Recebe a quantidade vendida em um parametro
-    //2. Verifica se a quantidade vendida é menor ou igual a quantidade no estoque
-    //3. Se sim, retorna um True
-    //4. Se nao, retorna false indicando que não tem estoque suficiente
-    public function checarEstoque(int $quantidadeVendida) {
-        if($quantidadeVendida <= $this->qtd) {
-            return true; // Tem estoque suficiente
-        } else {
-            return false; // Não tem estoque suficiente
-        }
-    }
-
-    //Método para atualizar o estoque do produto quando uma venda é realizada e como Vai funcionar
-    //1. Recebe a quantidade vendida em um parametro
-    //2. Usa o metodo checar estoque como condição para atualizar o estoque
-    //3. Se sim, diminui a quantidade em estoque
-    public function atualizarEstoque(int $quantidadeVendida) {
-        if($this->checarEstoque($quantidadeVendida)) {
-            $this->qtd -= $quantidadeVendida;
-        }
-    }
-
-    //Função para exibir os atributos do produto
-    public function exibirDetalhes() {
-        return "Jogo: " . $this->nomeJogo . ", Estoque: " . $this->qtd . ", Preço: R$" . number_format($this->preco, 2, ',', '.');
-    }
-
-    public function getVendedor(): Vendedor{
+    public function getVendedor(): string {
         return $this->vendedor;
     }
+
+    public function setVendedor(string $vendedor): void{
+        $this->vendedor = $vendedor;
+    }
+
+
+    public function setPromocao(float $desconto): void{
+        $this->temPromocao = true;
+        $this->desconto = $desconto;
+    }
+
+    public function removerPromocao(): void{
+        $this->temPromocao = false;
+        $this->desconto = 0;
+    }
+
+    public function atualizarEstoque(int $novoValor): void{
+        $this->qtd = $novoValor;
+    }
+
+    public function checarEstoque(): bool{
+        return $this->qtd > 0;
+    }
+
+    //aq é provavelmente uma função pra usar o polimorfismo q ele pediu
+    public function getPrecoFinal(): float{
+        if (!$this->temPromocao) {
+            return $this->valor;
+        }
+
+        return parent::aplicarDesconto($this->valor);
+    }
 }
-
-
-
 
