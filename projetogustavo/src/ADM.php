@@ -24,7 +24,7 @@ class ADM extends Usuario{
         return $usuarios;
     }
 
-    public function listarUsuarios(array $usuarios){
+    public function listarUsuarios(array $usuarios): void{
         foreach ($usuarios as $index => $user) {
             echo "\n##";
             echo " [{$index}] ";

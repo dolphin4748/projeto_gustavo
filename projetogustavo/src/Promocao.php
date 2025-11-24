@@ -8,20 +8,20 @@ class Promocao extends Produto{
 
     protected float $desconto;
 
-    public function __construct(Vendedor $vendedor, string $nome, int $qtd, float $valor, float $desconto){
-        parent::__construct($vendedor, $nome, $qtd, $valor, $desconto);
-        $this->desconto = $desconto;
+    public function __construct(Vendedor $vendedor, string $nome, int $qtd, float $valor, float $desconto) {
+        parent::__construct($vendedor, $nome, $qtd, $valor);
+        $this->setDesconto($desconto);
     }
 
     public function getDesconto(): float {
         return $this->desconto;
     }
 
-    public function setDesconto(float $valor): void {
+    private function setDesconto(float $valor): void {
         $this->desconto = $valor;
     }
 
-    public function exibirDetalhes() {
+    public function exibirDetalhes(): string {
         return "Jogo: " . $this->getNome() . ", Estoque: " . $this->getQtd() . ", Preço: R$" . number_format($this->getPreco(), 2, ',', '.'). ", Desconto: ". number_format($this->getDesconto(), 2, ',', '.'). "%";
     }
 
@@ -31,7 +31,7 @@ class Promocao extends Produto{
         return $valor - ($valor * ($this->desconto / 100));
     }
 
-    public function getTipo(){
+    public function getTipo(): string {
         return "promocao";
     }
 }

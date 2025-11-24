@@ -20,7 +20,7 @@ class Cliente extends Usuario
     }
 
     //Função para remover algum item do carrinho
-    public function removerCarrinho(int $index) {
+    public function removerCarrinho(int $index): void {
         echo "removendo ". $this->carrinho[$index]["produto"]->getNome(). " do carrinho.\n";
         unset($this->carrinho[$index]);
         $this->carrinho = array_values($this->carrinho);        
@@ -68,7 +68,7 @@ class Cliente extends Usuario
     }
 
     //Função para exibir os itens no carrinho
-    public function listarCarrinho() {
+    public function listarCarrinho(): void {
 
         if (empty($this->carrinho)){
             echo "\nnão existe nenhum item no carrinho atual.\n";

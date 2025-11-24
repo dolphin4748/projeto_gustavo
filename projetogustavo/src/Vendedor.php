@@ -9,27 +9,27 @@ use Unimar\Poo\Loja;
 class Vendedor extends Usuario
 {
     //Função para adcionar algum item no estoque
-    public function adcionarEstoque(Loja $loja, string $nomeJogo, int $qtd, float $preco) {
+    public function adcionarEstoque(Loja $loja, string $nomeJogo, int $qtd, float $preco): void {
         $produto = new Produto($this, $nomeJogo, $qtd, $preco);
 
         $loja->adicionarJogo($produto);
     }
 
-    public function adcionarPromocao(Loja $loja, int $index, float $desconto) {
+    public function adcionarPromocao(Loja $loja, int $index, float $desconto): void {
         $loja->adicionarPromocao($index, $desconto);
     }
 
     //Função para remover algum item do estoque
-    public function removerEstoque(Loja $loja, int $index) {
+    public function removerEstoque(Loja $loja, int $index): void {
         $loja->removerJogo($index);       
     }
 
-    public function removerPromocao(Loja $loja, int $index) {
+    public function removerPromocao(Loja $loja, int $index): void {
         $loja->removerPromocao($index);       
     }
 
     //Função para exibir os itens no estoque
-    public function listarEstoque(Loja $loja) {
+    public function listarEstoque(Loja $loja): void {
         $estoque = array_filter($loja->getEstoque(), function($prod) {
             return $prod->getVendedor() === $this;
         });
@@ -44,8 +44,8 @@ class Vendedor extends Usuario
         }
     } 
 
-    public function listarEstoquePromocao(Loja $loja){
-        $estoque = array_filter($loja->getEstoque(), function($prod) {
+    public function listarEstoquePromocao(Loja $loja): void{
+        $estoque = array_filter($loja->getEstoque(), function($prod): bool {
             return $prod->getVendedor() == $this && $prod->getTipo() == "promocao";
         });
 
@@ -59,13 +59,13 @@ class Vendedor extends Usuario
         }
     }
 
-    public function getEstoque(Loja $loja){
-        $estoque = array_filter($loja->getEstoque(), function($prod) {
-            return $prod->getVendedor() == $this;
-        });
+    // public function getEstoque(Loja $loja){
+    //     $estoque = array_filter($loja->getEstoque(), function($prod) {
+    //         return $prod->getVendedor() == $this;
+    //     });
 
-        return $estoque;
-    }
+    //     return $estoque;
+    // }
 
     public function getTipo(): string{
         return "vendedor";

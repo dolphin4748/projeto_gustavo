@@ -24,12 +24,12 @@ abstract class Usuario
         $this->conta = new ContaCorrente($this, 0);
     }
 
-    public function logout(){
+    public function logout(): null{
         echo "Usuario deslogado.\n";
         return null;
     } 
 
-    public function setNomeCompleto(string $nome, string $sobrenome){
+    protected function setNomeCompleto(string $nome, string $sobrenome): void{
         $this->nome = $nome;
         $this->sobrenome = $sobrenome;
     }
@@ -37,21 +37,21 @@ abstract class Usuario
         return $this->nome . " " . $this->sobrenome;
     }
 
-    public function setCpf(string $cpf){
+    protected function setCpf(string $cpf): void{
         $this->cpf = $cpf;
     }
     public function getCpf(): string{
         return $this->cpf;
     }
 
-    protected function setEmail(string $email){
+    protected function setEmail(string $email): void{
         $this->email = $email;
     }
     public function getEmail(): string{
         return $this->email;
     }
     
-    protected function setSenha(string $senha){
+    protected function setSenha(string $senha): void{
         $this->senha = $senha;
     }
     public function getSenha(): string{

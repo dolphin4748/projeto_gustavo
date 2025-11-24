@@ -61,7 +61,7 @@ class Loja {
         }
     }
 
-    public function getEstoque(){
+    public function getEstoque(): array{
         return $this->estoque;
     }
 }
