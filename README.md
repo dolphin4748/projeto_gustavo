@@ -46,19 +46,21 @@ O projeto roda em um servidor local com **XAMPP**.
 
 O sistema simula uma **plataforma de e-commerce** entre **Clientes** e **Vendedores**, com:
 
-- 🛍️ Controle de estoque  
-- 🛒 Carrinho de compras  
-- 💰 Contas bancárias virtuais (com depósito, saque e transferência)  
+- Controle de estoque  
+- Carrinho de compras  
+- Contas bancárias virtuais (com depósito, saque e transferência)
+- Usuários (Adm, Vendedor, Cliente)
+- Adicionar, Remover promoções
 
 ---
 
 ## Classes Principais
 
-- **Usuario** → Classe base para Cliente e Vendedor (login/logout)  
+- **Usuario** → Classe base para Cliente Vendedor e Adm (login/logout)  
 - **Cliente** → Pode adicionar/remover produtos no carrinho e realizar compras  
 - **Vendedor** → Pode cadastrar produtos no estoque e listar/remover itens  
 - **Produto** → Representa um jogo com nome, preço, estoque e vendedor responsável  
-- **ContaBancaria / ContaPagamento / ContaCorrente** → Estrutura financeira para movimentação de valores  
+- **ContaBancaria / ContaPagamento / ContaCorrente** → Estrutura financeira para movimentação de valores
 
 ---
 
@@ -66,7 +68,7 @@ O sistema simula uma **plataforma de e-commerce** entre **Clientes** e **Vendedo
 
 0. para efetuar login é apenas necessario usar uma das contas pre-definidas, "cliente@gmail.com" e "vendedor@gmail.com" com ambas tendo a senha "12345"
 1. O **cliente** realiza login e deposita saldo em sua conta.  
-2. O **vendedor** adiciona produtos ao estoque.  
+2. O **vendedor** adiciona produtos e promoções ao estoque.  
 3. O **cliente** adiciona produtos ao carrinho e lista os itens.  
 4. Ao finalizar a compra:  
    - O sistema verifica o estoque disponível.  
